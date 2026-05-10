@@ -1,5 +1,4 @@
-1)index.html:-  
-                                                                                                                                                                                                                                           <!DOCTYPE html>
+index.html:-                                                                                                                                                                                                                                    <!DOCTYPE html>
 <html>
 <head>
     <title>User Registration</title>
@@ -102,8 +101,7 @@ document.getElementById("registerForm").addEventListener("submit", function(e){
 </body>
 </html>
 
-                                                                                                                                                                                                                                                        2)user.html:-
-                                                                                                                                                                                                                                            <!DOCTYPE html>
+                                                                                                                                                                                                                                                       user.html:-                                                                                                                                                                                                                                            <!DOCTYPE html>
 <html>
 <head>
     <title>User Data</title>
@@ -169,8 +167,7 @@ users.forEach(user => {
 </body>
 </html>  
 
-                                                                                                                                                                                                                                                    3)style.css :-
-                                                                                                                                                                                                                                             body {
+                                                                                                                                                                                                                                                    style.css :-                                                                                                                                                                                                                                             body {
     font-family: Arial, sans-serif;
     background-color: #f2f2f2;
 }
