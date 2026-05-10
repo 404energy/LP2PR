@@ -1,0 +1,189 @@
+ STEP-BY-STEP PROCEDURE
+🔹 Step 1: Install Requirements
+Install Node.js (LTS version)
+node -v
+npm -v
+Install Angular CLI:
+npm install -g @angular/cli
+ng version
+🔹 Step 2: Create Project
+ng new user-auth-app
+cd user-auth-app
+ng serve
+
+Open:
+
+http://localhost:4200
+🔹 Step 3: Create Components
+ng generate component register
+ng generate component login
+ng generate component profile
+🔹 Step 4: Create Service (Service is used to store and share data ) 
+ng generate service user
+
+then open
+
+
+1. Routing File
+
+📂 src/app/app.routes.ts
+import { Routes } from '@angular/router'; 
+
+import { RegisterComponent } from './register/register';
+import { LoginComponent } from './login/login';
+import { ProfileComponent } from './profile/profile';
+
+export const routes: Routes = [
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: '', redirectTo: 'register', pathMatch: 'full' }
+];
+
+
+2. App Config
+
+📂 src/app/app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { routes } from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [provideRouter(routes)]
+};
+
+
+🔹 3. App HTML (Navigation)
+
+📂 src/app/app.html
+<a routerLink="/register">Register</a> |
+<a routerLink="/login">Login</a> |
+<a routerLink="/profile">Profile</a>
+
+<hr>
+<router-outlet></router-outlet>
+
+🔹 4. User Service
+
+📂 src/app/user.service.ts
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+
+  userData: any;
+
+  register(user: any) {
+    this.userData = user;
+  }
+
+  getUser() {
+    return this.userData;
+  }
+}
+
+🔹 5. Register Component
+
+📂 register.ts
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { UserService } from '../user.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-register',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './register.html'
+})
+export class RegisterComponent {
+
+  user = { name: '', email: '', password: '' };
+
+  constructor(private userService: UserService, private router: Router) {}
+
+  register() {
+    this.userService.register(this.user);
+    alert("Registration Successful");
+    this.router.navigate(['/login']);
+  }
+}
+
+
+📂 register.html
+<h2>Register</h2>
+
+<input type="text" placeholder="Name" [(ngModel)]="user.name"><br>
+<input type="email" placeholder="Email" [(ngModel)]="user.email"><br>
+<input type="password" placeholder="Password" [(ngModel)]="user.password"><br>
+
+<button (click)="register()">Register</button>
+
+📂 login.ts
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { UserService } from '../user.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [FormsModule],
+  templateUrl: './login.html'
+})
+export class LoginComponent {
+
+  email = '';
+  password = '';
+
+  constructor(private userService: UserService, private router: Router) {}
+
+  login() {
+    const user = this.userService.getUser();
+
+    if (user && user.email === this.email && user.password === this.password) {
+      alert("Login Successful");
+      this.router.navigate(['/profile']);
+    } else {
+      alert("Invalid Credentials");
+    }
+  }
+}
+
+
+📂 login.html
+<h2>Login</h2>
+
+<input type="email" placeholder="Email" [(ngModel)]="email"><br>
+<input type="password" placeholder="Password" [(ngModel)]="password"><br>
+
+<button (click)="login()">Login</button>
+
+📂 profile.ts
+import { Component } from '@angular/core';
+import { UserService } from '../user.service';
+
+@Component({
+  selector: 'app-profile',
+  standalone: true,
+  templateUrl: './profile.html'
+})
+export class ProfileComponent {
+
+  user: any;
+
+  constructor(private userService: UserService) {
+    this.user = this.userService.getUser();
+  }
+}
+
+📂 profile.html
+<h2>User Profile</h2>
+
+<p>Name: {{user?.name}}</p>
+<p>Email: {{user?.email}}</p>
+
+
+now run: ng serve
