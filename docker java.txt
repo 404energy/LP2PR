@@ -1,0 +1,13 @@
+1)docker --version (check docker version)
+2)docker images   (check what are images available in docker)
+3)docker ps  (check which container are available)
+4)docker pull openjdk:27-ea-trixie
+5)docker images (again check available imgs )
+6)docker run --name JAVA -it -d openjdk:27-ea-trixie
+7)docker exec -it JAVA jshell
+  System.out.println("Hello docker"); 
+8) /exit
+9)docker ps
+10)docker container rm a5edcfdc51eb
+11)docker stop a5edcfdc51eb
+12)docker container rm a5edcfdc51eb
